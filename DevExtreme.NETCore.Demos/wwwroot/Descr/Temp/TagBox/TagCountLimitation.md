@@ -1,0 +1,1 @@
+The **TagBox** allows you to&nbsp;limit the number of&nbsp;displayed tags. When specified limit is&nbsp;exceeded, the tags are united into a&nbsp;single multi-tag displaying the number of&nbsp;selected items. The **TagBox** can display multi-tag alone or&nbsp;along with ordinary tags depending on&nbsp;the **showMultiTagOnly** option value.

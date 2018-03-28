@@ -1,0 +1,68 @@
+﻿@using System.Collections.Generic;
+
+@(Html.DevExtreme().DataGrid()
+    .ID("gridContainer")
+    .DataSource(d => d.OData()
+        .Url("https://js.devexpress.com/Demos/DevAV/odata/Tasks")
+        .Key("Product_ID")
+        .Expand("ResponsibleEmployee")
+    )
+    .DataSourceOptions(d => d.Select(new string[] {
+            "Task_ID",
+            "Task_Subject",
+            "Task_Start_Date",
+            "Task_Due_Date",
+            "Task_Status",
+            "Task_Priority",
+            "ResponsibleEmployee/Employee_Full_Name"
+        })
+    )
+    .Scrolling(scrolling => scrolling.Mode(GridScrollingMode.Virtual))
+    .GroupPanel(groupPanel => groupPanel.Visible(true))
+    .Columns(columns => {
+        columns.Add()
+            .DataField("Task_ID")
+            .Width(90);
+
+        columns.Add()
+            .Caption("Subject")
+            .DataField("Task_Subject")
+            .Width(190);
+
+        columns.Add()
+            .Caption("Status")
+            .DataField("Task_Status")
+            .GroupIndex(0);
+
+        columns.Add()
+            .Caption("Priority")
+            .DataField("Task_Priority")
+            .GroupIndex(1)
+            .Lookup(lookup => {
+                lookup.DataSource(new List<object> {
+                    new { Name = "High", Value = 4 },
+                    new { Name = "Urgent", Value = 3 },
+                    new { Name = "Normal", Value = 2 },
+                    new { Name = "Low", Value = 1 }
+                });
+                lookup.ValueExpr("Value");
+                lookup.DisplayExpr("Name");
+            });
+
+        columns.Add()
+            .Caption("Assigned To")
+            .DataField("ResponsibleEmployee.Employee_Full_Name")
+            .AllowGrouping(false)
+            .AllowSorting(false);
+
+        columns.Add()
+            .Caption("Start Date")
+            .DataField("Task_Start_Date")
+            .DataType(GridColumnDataType.Date);
+
+        columns.Add()
+            .Caption("Due Date")
+            .DataField("Task_Due_Date")
+            .DataType(GridColumnDataType.Date);
+    })
+)

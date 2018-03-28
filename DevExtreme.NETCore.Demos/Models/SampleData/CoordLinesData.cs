@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace DevExtreme.NETCore.Demos.Models.SampleData {
+    public partial class SampleData {
+        public static IEnumerable<CoordLines> GetCoordLinesData() {
+            CoordLines result = new CoordLines() {
+                type = "FeatureCollection",
+                features = new List<object>()
+            };
+            //add meridians
+            for (int longitude = -180; longitude <= 180; longitude += 30) {
+                List<object> lineCoords = new List<object>();
+                for (var latitude = -90; latitude <= 90; latitude += 5) {
+                    lineCoords.Add(new[] {
+                        longitude,
+                        latitude
+                    });
+                }
+
+                result.features.Add(new {
+                    geometry = new {
+                        type = "LineString",
+                        coordinates = lineCoords
+                    }
+                });
+            }
+ 
+            //add parallels
+            for (int latitude = -90; latitude <= 90; latitude += 30) {
+                result.features.Add(new {
+                    geometry = new {
+                        type = "LineString",
+                        coordinates = new[] {
+                            new[] {
+                                -180,
+                                latitude
+                            },
+                            new [] {
+                                180,
+                                latitude
+                            }
+                        }
+                    }
+                });
+            }
+            return new[] { result };
+        }
+    }
+}

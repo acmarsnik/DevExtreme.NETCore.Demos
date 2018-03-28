@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="~/lib/devextreme/css/dx.common.css" rel="stylesheet" />
+    <link href="~/lib/devextreme/css/dx.spa.css" rel="stylesheet" />
+    <link href="~/lib/devextreme/css/dx.light.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+
+    @Html.Partial("_DemoStyles")
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script src="~/lib/devextreme/js/cldr.min.js"></script>
+    <script src="~/lib/devextreme/js/cldr/event.min.js"></script>
+    <script src="~/lib/devextreme/js/cldr/supplemental.min.js"></script>
+    <script src="~/lib/devextreme/js/cldr/unresolved.min.js"></script>
+
+    <script src="~/lib/devextreme/js/globalize.min.js"></script>
+    <script src="~/lib/devextreme/js/globalize/number.min.js"></script>
+    <script src="~/lib/devextreme/js/globalize/currency.min.js"></script>
+    <script src="~/lib/devextreme/js/globalize/date.min.js"></script>
+    <script src="~/lib/devextreme/js/globalize/message.min.js"></script>
+
+    <script src="~/lib/jszip/dist/jszip.js"></script>
+
+    <script src="~/lib/devextreme/js/dx.all.js"></script>
+    <script src="~/lib/devextreme/js/vectormap-data/world.js"></script>
+    <script src="~/lib/devextreme/js/vectormap-data/usa.js"></script>
+
+    <script src="~/lib/devextreme-aspnet-data/js/dx.aspnet.data.js"></script>
+    <script src="~/lib/devextreme/js/aspnet/dx.aspnet.mvc.js"></script>
+
+    <script>
+        DevExpress.config({ forceIsoDateParsing: true });
+    </script>
+
+    @RenderSection("Localization", false)
+</head>
+<body class="dx-viewport">
+    <header class="header">
+        <div class="header-container">
+            <a class="logo" href="@Url.Content("~/")">DevExtreme</a>
+
+            <nav class="header-menu" id="headerMenu">
+                <ul class="menu-list">
+                    <li>
+                        <a href="https://js.devexpress.com/Overview/" target="_blank">Overview</a>
+                    </li>
+                    <li>
+                        <a href="https://js.devexpress.com/New/" target="_blank">What's New</a>
+                    </li>
+                    <li>
+                        <a class="active" href="@Url.Content("~/")">Demos</a>
+                    </li>
+                    <li>
+                        <a href="https://js.devexpress.com/Documentation/" target="_blank">Documentation</a>
+                    </li>
+                    <li>
+                        <a href="https://js.devexpress.com/Support/" target="_blank">Support</a>
+                    </li>
+                    <li>
+                        <a href="https://js.devexpress.com/ThemeBuilder/" target="_blank">Theme Builder</a>
+                    </li>
+                    <li>
+                        <a href="https://js.devexpress.com/Blogs/" target="_blank">Blogs</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-buttons">
+                <a class="download" title="Download" href="https://js.devexpress.com/Download/" target="_blank"></a>
+                <a class="buy" title="Buy DevExtreme" href="https://js.devexpress.com/Buy/" target="_blank"></a>
+                <div class="dx-logo-container">
+                    <a href="https://www.devexpress.com/" target="_blank" class="dx-logo-image"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="body">
+        @Html.Partial("_WidgetsMenu")
+
+        <div class="demo-wrapper">
+            @Html.Partial("_DemoTitle")
+            @Html.Partial("_DemoDescription")
+
+            <div class="simulator">
+                <div class="demo-device">
+                    <div class="demo-display">
+                        <div class="demo-container">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Partial("_DemoCode")
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="left">
+                <div class="logo"></div>
+                <div class="copy">
+                    <p>
+                        Copyright © 2011-@DateTime.Now.Year Developer Express Inc.<br />
+                        All trademarks or registered trademarks are property of their respective owners.
+                    </p>
+                </div>
+                <div class="links">
+                    <a href="https://js.devexpress.com/Privacy/" target="_blank"> Your Privacy - Legal Statements</a>
+                    <br />
+                    <a href="https://js.devexpress.com/Licensing/" target="_blank"> Licensing </a>
+                </div>
+            </div>
+
+            <div class="social">
+                <div class="text">Follow us</div>
+                <div class="buttons">
+                    <a href="https://github.com/DevExpress/" class="social-button github" target="_blank"></a>
+                    <a href="https://js.devexpress.com/Blogs/" class="social-button rss" target="_blank"></a>
+                    <a href="https://plus.google.com/115769694594665189124" class="social-button gplus" target="_blank"></a>
+                    <a href="https://www.facebook.com/devexpress.devextreme" class="social-button facebook" target="_blank"></a>
+                    <a href="https://twitter.com/devextreme" class="social-button twitter" target="_blank"></a>
+                    <a href="https://www.youtube.com/playlist?list=PL8h4jt35t1wjGvgflbHEH_e3b23AA30-z" class="social-button youtube" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

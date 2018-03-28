@@ -1,0 +1,1 @@
+The **SelectBox** widget is&nbsp;an&nbsp;editor that allows an&nbsp;end user to&nbsp;select an&nbsp;item from a&nbsp;drop-down list.

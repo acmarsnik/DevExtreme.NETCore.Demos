@@ -1,0 +1,38 @@
+﻿<div id="data-grid-demo">
+    @(Html.DevExtreme().DataGrid<DevExtreme.NETCore.Demos.Models.DataGrid.Employee>()
+        .ID("gridContainer")
+        .Paging(paging => paging.Enabled(false))
+        .Editing(editing => {
+            editing.Mode(GridEditMode.Batch);
+            editing.AllowUpdating(true);
+        })
+        .Columns(columns => {
+            columns.AddFor(m => m.Prefix)
+                .Width(70);
+
+            columns.AddFor(m => m.FirstName);
+
+            columns.AddFor(m => m.LastName);
+
+            columns.AddFor(m => m.Position)
+                .Width(170);
+
+            columns.AddFor(m => m.StateID)
+                .Width(125)
+                .Lookup(lookup => lookup
+                    .DataSource(d => d.Mvc().Controller("DataGridStatesLookup").LoadAction("Get").Key("ID"))
+                    .DisplayExpr("Name")
+                    .ValueExpr("ID")
+                );
+
+            columns.AddFor(m => m.BirthDate)
+                .ShowEditorAlways(true);
+        })
+        .DataSource(d => d.Mvc()
+            .Controller("DataGridEmployees")
+            .LoadAction("Get")
+            .UpdateAction("Put")
+            .Key("ID")
+        )
+    )
+</div>

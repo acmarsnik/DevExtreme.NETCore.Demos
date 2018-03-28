@@ -1,0 +1,1 @@
+This demo shows how to&nbsp;filter data in&nbsp;the **List** using the **FilterBuilder** widget.

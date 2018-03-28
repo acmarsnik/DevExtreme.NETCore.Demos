@@ -1,0 +1,17 @@
+﻿#range-selector-demo {
+    height: 440px;
+    width: 100%;
+}
+
+h2 {
+    margin-top: 38px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    width: 20%;
+}

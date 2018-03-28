@@ -1,0 +1,1 @@
+The **Panorama** widget is&nbsp;a&nbsp;full-screen widget that allows you to&nbsp;arrange items on&nbsp;a&nbsp;long horizontal canvas split into several views. Each view contains several items, and an&nbsp;end user navigates the views with the swipe gesture. The **Panorama** is&nbsp;often used as&nbsp;a&nbsp;navigation map on&nbsp;the first page of&nbsp;an&nbsp;application.

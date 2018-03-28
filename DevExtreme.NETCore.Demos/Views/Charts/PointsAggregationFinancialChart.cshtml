@@ -1,0 +1,55 @@
+﻿<div id="chart-demo">
+    @(Html.DevExtreme().Chart()
+        .ID("zoomedChart")
+        .Title("Google Inc. Stock Prices")
+        .DataSource(d => d.Mvc().LoadAction("GetStockPrices"))
+        .CommonSeriesSettings(s => s.Type(SeriesType.Candlestick))
+        .ValueAxis(a => a
+            .Add()
+            .ValueType(ChartDataType.Numeric))
+        .ArgumentAxis(a => a
+            .ValueMarginsEnabled(false)
+            .Grid(g => g.Visible(true))
+            .Label(l => l.Visible(false))
+            .ArgumentType(ChartDataType.DateTime))
+        .Tooltip(t => t.Enabled(true))
+        .Legend(l => l.Visible(false))
+        .UseAggregation(true)
+        .Series(s => s
+            .Add()
+            .OpenValueField("Open")
+            .HighValueField("High")
+            .LowValueField("Low")
+            .CloseValueField("Close")
+            .ArgumentField("Date")
+        )
+    )
+    @(Html.DevExtreme().RangeSelector()
+        .Size(s => s.Height(120))
+        .DataSource(d => d.Mvc().LoadAction("GetStockPrices"))
+        .Chart(c => c
+            .UseAggregation(true)
+            .ValueAxis(a => a
+                .ValueType(ChartDataType.Numeric))
+            .Series(s => s
+                .Add()
+                .Type(SeriesType.Line)
+                .ValueField("Open")
+                .ArgumentField("Date")))
+        .Scale(s => s
+            .MinorTickInterval(VizTimeInterval.Day)
+            .TickInterval(VizTimeInterval.Month)
+            .ValueType(ChartDataType.DateTime)
+            .PlaceholderHeight(20))
+        .Behavior(b => b
+            .CallValueChanged(ValueChangedCallMode.OnMoving)
+            .SnapToTicks(false))
+        .OnValueChanged("rangeSelector_valueChanged")
+    )
+</div>
+
+<script>
+    function rangeSelector_valueChanged(e) {
+        $("#zoomedChart").dxChart("instance").zoomArgument(new Date(e.value[0]), new Date(e.value[1]));
+    }
+</script>

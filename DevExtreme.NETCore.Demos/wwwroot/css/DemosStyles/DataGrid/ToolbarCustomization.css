@@ -1,0 +1,37 @@
+﻿.dx-datagrid-header-panel .dx-toolbar {
+    margin: 0;
+    padding-right: 20px;
+    background-color: rgba(85, 149, 222, 0.6);
+}
+
+.dx-datagrid-header-panel .dx-toolbar-items-container  {
+    height: 70px;
+}
+
+.dx-datagrid-header-panel .dx-toolbar-before {
+    background-color: rgba(103, 171, 255, 0.6);
+}
+
+.dx-datagrid-header-panel .dx-selectbox {
+     margin: 17px 10px;
+}
+
+.dx-datagrid-header-panel .dx-button {
+     margin: 17px 0;
+}
+
+.informer {
+    height: 70px;
+    width: 130px;
+    text-align: center;
+    background-color: rgba(58, 132, 226, 0.6);
+    color: #fff;
+}
+
+.count {
+    padding-top: 15px;
+    line-height: 27px;
+    font-size: 28px;
+    font-weight: normal;
+    font-family: "Helvetica Neue", "Segoe UI", Helvetica, Verdana, sans-serif;
+}

@@ -1,0 +1,20 @@
+﻿@model List<DevExtreme.NETCore.Demos.Models.NumericScaleProduct>
+
+@(Html.DevExtreme().RangeSelector()
+    .DataSource(Model)
+    .Margin(m => m.Top(50))
+    .Size(s => s.Height(400))
+    .Chart(c => c
+        .CommonSeriesSettings(cs => cs
+            .Type(SeriesType.Spline)
+            .ArgumentField("Weight")
+        )
+        .Series(s => {
+            s.Add().ValueField("AppleCost").Color("#00ff00");
+            s.Add().ValueField("OrangeCost").Color("#ffa500");
+        })
+    )
+    .Scale(s => s.ValueType(ChartDataType.Numeric))
+    .Value(new[] { 1, 2 })
+    .Title("Select a Product Weight")
+)

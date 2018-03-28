@@ -1,0 +1,55 @@
+﻿@(Html.DevExtreme().Map()
+    .Key(k => k
+        .Google("AIzaSyDk2m6n8ICK7FSmTHBLlapAWF3epiDdkHE")
+        .GoogleStatic("AIzaSyDk2m6n8ICK7FSmTHBLlapAWF3epiDdkHE"))
+    .ID("map")
+    .Center("Brooklyn Bridge,New York,NY")
+    .Zoom(14)
+    .Height(400)
+    .Width("100%")
+    .Provider(GeoMapProvider.Google)
+    .Type(GeoMapType.Roadmap)
+)
+
+<div class="options">
+    <div class="caption">Options</div>
+    <div class="option">
+        <span>Map Provider</span>
+        @(Html.DevExtreme().SelectBox()
+            .ID("choose-provider")
+            .DataSource(new[] {
+                new { key = GeoMapProvider.Google, name = "Google Dynamic Map" },
+                new { key = GeoMapProvider.GoogleStatic, name = "Google Static Map" },
+                new { key = GeoMapProvider.Bing, name = "Bing Map" }
+            })
+            .DisplayExpr("name")
+            .ValueExpr("key")
+            .Value(GeoMapProvider.Google)
+            .OnValueChanged("selectBoxChooseProvider_onValueChanged")
+        )
+    </div>
+    <div class="option">
+        <span>Map Type</span>
+        @(Html.DevExtreme().SelectBox()
+            .ID("choose-type")
+            .DataSource(new[] {
+                new { key = GeoMapType.Roadmap, name = "Default Map" },
+                new { key = GeoMapType.Satellite, name = "Photographic Map" },
+                new { key= GeoMapType.Hybrid, name= "Hybrid Map" }
+            })
+            .DisplayExpr("name")
+            .ValueExpr("key")
+            .Value(GeoMapType.Roadmap)
+            .OnValueChanged("selectBoxChooseType_onValueChanged")
+        )
+    </div>
+</div>
+
+<script>
+    function selectBoxChooseProvider_onValueChanged(data) {
+        $("#map").dxMap("instance").option("provider", data.value);
+    }
+    function selectBoxChooseType_onValueChanged(data) {
+        $("#map").dxMap("instance").option("type", data.value);
+    }
+</script>

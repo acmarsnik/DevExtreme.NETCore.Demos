@@ -1,0 +1,58 @@
+﻿<div class="dx-fieldset">
+    <div class="dx-field">
+        <div class="dx-field-label">Normal</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().Button()
+                  .Text("OK")
+                  .Type(ButtonType.Normal)
+                  .OnClick("notify")
+            )
+        </div>
+    </div>
+    <div class="dx-field">
+        <div class="dx-field-label">Success</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().Button()
+                  .Text("Apply")
+                  .Type(ButtonType.Success)
+                  .OnClick("notify")
+            )
+        </div>
+    </div>
+    <div class="dx-field">
+        <div class="dx-field-label">Default</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().Button()
+                  .Text("Done")
+                  .Type(ButtonType.Default)
+                  .OnClick("notify")
+            )
+        </div>
+    </div>
+    <div class="dx-field">
+        <div class="dx-field-label">Danger</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().Button()
+                  .Text("Delete")
+                  .Type(ButtonType.Danger)
+                  .OnClick("notify")
+            )
+        </div>
+    </div>
+    <div class="dx-field">
+        <div class="dx-field-label">Back</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().Button()
+                  .Type(ButtonType.Back)
+                  .OnClick("notify")
+            )
+        </div>
+    </div>
+</div>
+
+<script>
+    function notify(data) {
+        var buttonText = data.component.option("text");
+        DevExpress.ui.notify("The " + buttonText + " button was clicked");
+    }
+</script>

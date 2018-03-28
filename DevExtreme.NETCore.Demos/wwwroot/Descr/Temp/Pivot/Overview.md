@@ -1,0 +1,1 @@
+The **Pivot** widget provides a&nbsp;quick way to&nbsp;manage multiple views. It&nbsp;includes a&nbsp;collection of&nbsp;views and a&nbsp;navigation header. An&nbsp;end user switches the views by&nbsp;swiping them or&nbsp;by&nbsp;clicking their titles on&nbsp;the navigation header.

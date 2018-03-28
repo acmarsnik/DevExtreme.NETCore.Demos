@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/devextreme/css/dx.common.css" />
+    <link rel="stylesheet" href="~/lib/devextreme/css/dx.spa.css" />
+    <link rel="stylesheet" href="~/css/demo-template.css" />
+    @{
+        string theme = Context.Request.Query["theme"];
+
+        if(string.IsNullOrEmpty(theme)) {
+            theme = "light";
+        }
+        var themeName = "generic." + theme;
+
+        var device = "desktop";
+        if(theme.StartsWith("ios")) {
+            device = "iPhone";
+        } else if(theme.StartsWith("android")) {
+            device = "androidPhone";
+        }
+    }
+    <link rel="stylesheet" href="~/lib/devextreme/css/dx.@(theme).css" />
+
+    @Html.Partial("_DemoStyles")
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script src="~/lib/devextreme/js/cldr.min.js"></script>
+    <script src="~/lib/devextreme/js/cldr/event.min.js"></script>
+    <script src="~/lib/devextreme/js/cldr/supplemental.min.js"></script>
+    <script src="~/lib/devextreme/js/cldr/unresolved.min.js"></script>
+
+    <script src="~/lib/devextreme/js/globalize.min.js"></script>
+    <script src="~/lib/devextreme/js/globalize/number.min.js"></script>
+    <script src="~/lib/devextreme/js/globalize/currency.min.js"></script>
+    <script src="~/lib/devextreme/js/globalize/date.min.js"></script>
+
+    <script src="~/lib/jszip/dist/jszip.js"></script>
+
+    <script src="~/lib/devextreme/js/dx.all.js"></script>
+    <script src="~/lib/devextreme/js/vectormap-data/world.js"></script>
+    <script src="~/lib/devextreme/js/vectormap-data/usa.js"></script>
+
+    <script src="~/lib/devextreme-aspnet-data/js/dx.aspnet.data.js"></script>
+    <script src="~/lib/devextreme/js/aspnet/dx.aspnet.mvc.js"></script>
+
+    <script>
+        DevExpress.devices.current("@device");
+        DevExpress.viz.currentTheme("@themeName");
+    </script>
+
+    @RenderSection("Localization", false)
+</head>
+<body class="dx-viewport">
+    <div class="demo-container">
+        @RenderBody()
+    </div>
+</body>
+</html>

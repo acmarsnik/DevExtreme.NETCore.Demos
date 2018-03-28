@@ -1,0 +1,125 @@
+﻿@(Html.DevExtreme().VectorMap()
+    .ID("vector-map")
+    .Layers(l => l.Add()
+        .Name("areas")
+        .DataSource(new JS("DevExpress.viz.map.sources.world"))
+        .Palette(VizPalette.Violet)
+        .ColorGroups(new double[] { 0, 10000, 50000, 100000, 500000, 1000000, 10000000, 50000000 })
+        .ColorGroupingField("total")
+        .Label(lbl => lbl
+            .Enabled(true)
+            .DataField("name")
+        )
+        .Customize("vectorMap_areasLayer_customize")
+    )
+    .Legends(l => l.Add()
+        .Source(s => s
+            .Layer("areas")
+            .Grouping("color")
+        )
+        .CustomizeText("vectorMap_areasLegend_customizeText")
+    )
+    .Title(t => t
+        .Text("Nominal GDP")
+        .Subtitle(st => st.Text("(in millions of US dollars)"))
+    )
+    .Export(e => e.Enabled(true))
+    .Tooltip(t => t
+        .Enabled(true)
+        .CustomizeTooltip("vectorMap_customizeTooltip")
+    )
+    .OnTooltipShown("vectorMap_onTooltipShown")
+    .Bounds(new JS("[-180, 85, 180, -60]"))
+)
+
+<script src="~/data/countriesGDP.js"></script>
+<script>
+    function format(data) {
+        return Globalize.formatNumber(data, { maximumfractiondigits: 0 });
+    }
+
+    function vectorMap_areasLayer_customize(elements) {
+        $.each(elements, function(_, element) {
+            var countryGDPData = countriesGDP[element.attribute("name")];
+            element.attribute("total", countryGDPData && countryGDPData.total || 0);
+        });
+    }
+
+    function vectorMap_areasLegend_customizeText(arg) {
+        return format(arg.start) + " to " + format(arg.end);
+    }
+
+    function vectorMap_customizeTooltip(arg) {
+        var countryGDPData = countriesGDP[arg.attribute("name")];
+        var node = $("<div>")
+            .append("<h4>" + arg.attribute("name") + "</h4>")
+            .append("<div id='nominal'></div>")
+            .append("<div id='gdp-sectors'></div>");
+
+        var total = countryGDPData && countryGDPData.total;
+        if(total)
+            node.find("#nominal").text("Nominal GDP: $" + format(total) + "M");
+
+        return {
+            html: node.html()
+        };
+    }
+
+    function vectorMap_onTooltipShown(e) {
+        var name = e.target.attribute("name"),
+            GDPData = [$.extend({ name: name }, countriesGDP[name])],
+            container = $("#gdp-sectors");
+        if(GDPData[0].services) {
+            container.dxChart({
+                dataSource: GDPData,
+                title: {
+                    text: "GDP sector composition",
+                    font: { size: 16 }
+                },
+                argumentAxis: {
+                    label: { visible: false }
+                },
+                valueAxis: {
+                    label: { visible: false }
+                },
+                commonSeriesSettings: {
+                    argumentField: "name",
+                    type: "bar",
+                    hoverMode: "allArgumentPoints",
+                    selectionMode: "allArgumentPoints",
+                    label: {
+                        visible: true,
+                        format: {
+                            type: "fixedPoint",
+                            precision: 1
+                        },
+                        customizeText: function(args) {
+                            return args.value + "%";
+                        }
+                    },
+                    valueAxis: {
+                        max: 100,
+                        min: 0
+                    }
+                },
+                series: [{
+                    valueField: "agriculture",
+                    name: "agriculture"
+                }, {
+                    valueField: "industry",
+                    name: "industry"
+                }, {
+                    valueField: "services",
+                    name: "services"
+                }],
+                legend: {
+                    orientation: "horizontal",
+                    horizontalAlignment: "center",
+                    verticalAlignment: "bottom"
+                }
+            });
+        } else {
+            container.text("No economic development data");
+        }
+    }
+</script>

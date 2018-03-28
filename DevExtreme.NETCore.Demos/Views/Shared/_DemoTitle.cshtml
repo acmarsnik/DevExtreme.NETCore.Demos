@@ -1,0 +1,6 @@
+﻿@{
+    var currentDemo = DevExtreme.NETCore.Demos.Models.Demos.MvcDemosStore.GetDemo(
+                            ViewContext.RouteData.Values["controller"].ToString()
+                            , ViewContext.RouteData.Values["action"].ToString());
+}
+<h1>@System.Text.RegularExpressions.Regex.Replace(currentDemo.Widget, "(\\B[A-Z])", " $1") &gt; @currentDemo.Title</h1>

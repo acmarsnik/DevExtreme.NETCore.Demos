@@ -1,0 +1,12 @@
+﻿.dx-fieldset {
+    max-width: 400px;
+}
+
+.weather .dx-button-content {
+    padding: 4px 12px;
+}
+
+.weather .dx-button-content .dx-icon {
+    width: 30px;
+    height: 30px;
+}

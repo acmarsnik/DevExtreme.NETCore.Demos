@@ -1,0 +1,77 @@
+﻿@using DevExtreme.NETCore.Demos.Models
+@model List<ListProduct>
+
+@{
+    var value = new object[] {
+        new object[] { "Name", FilterBuilderFieldFilterOperations.Equal, "Projector PlusHD" },
+        "or",
+        new object[] {
+            new object[] { "Category", FilterBuilderFieldFilterOperations.Equal, "Monitors" },
+            "and",
+            new object[] { "Price", FilterBuilderFieldFilterOperations.LessThan, 1300 }
+        },
+        "or",
+        new object[] {
+            new object[] { "Category", FilterBuilderFieldFilterOperations.Equal, "Televisions" },
+            "and",
+            new object[] { "Price", FilterBuilderFieldFilterOperations.LessThan, 4000 }
+        }
+    };
+    var categories = new string[] {
+        "Video Players",
+        "Televisions",
+        "Monitors",
+        "Projectors",
+        "Automation"
+    };
+}
+
+<div class="filter-container">
+    @(Html.DevExtreme().FilterBuilder<ListProduct>()
+        .ID("filterBuilder")
+        .Fields(fields =>{
+            fields.AddFor(m => m.ID);
+
+            fields.AddFor(m => m.Name);
+
+            fields.AddFor(m => m.Price)
+                .Format(Format.Currency);
+
+            fields.AddFor(m => m.CurrentInventory)
+                .Caption("Inventory");
+
+            fields.AddFor(m => m.Category)
+                .Lookup(l => l.DataSource(categories));
+        })
+        .Value(value)
+    )
+
+    @(Html.DevExtreme().Button()
+        .Text("Apply Filter")
+        .Type(ButtonType.Default)
+        .OnClick("applyFilter")
+    )
+</div>
+<div class="list-container">
+    @(Html.DevExtreme().List()
+        .ID("listWidget")
+        .DataSource(@Model)
+        .DataSourceOptions(d => d.Filter(value))
+        .ItemTemplate(@<text>
+            <div class="product">
+                <img src="<%= ImageSrc %>">
+                <div><%= Name %></div>
+                <div class="price"><%= Globalize.formatCurrency(Price, "USD", { maximumFractionDigits: 0 }) %></div>
+            </div>
+        </text>)
+    )
+</div>
+
+<script>
+    function applyFilter(data) {
+        var filter = $("#filterBuilder").dxFilterBuilder("instance").option("value"),
+            dataSource = $("#listWidget").dxList("instance").getDataSource();
+        dataSource.filter(filter);
+        dataSource.load();
+    }
+</script>

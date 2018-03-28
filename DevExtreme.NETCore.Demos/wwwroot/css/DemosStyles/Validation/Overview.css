@@ -1,0 +1,13 @@
+#check {
+    padding-left: 5px;
+}
+
+#summary {
+    padding-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#button {
+    display: block;
+}

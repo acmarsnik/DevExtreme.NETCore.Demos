@@ -1,0 +1,18 @@
+﻿@(Html.DevExtreme().Chart()
+    .ID("chart")
+    .Palette(VizPalette.HarmonyLight)
+    .Series(s => {
+        s.Add().ArgumentField("Arg").ValueField("Y1");
+        s.Add().ArgumentField("Arg").ValueField("Y2");
+    })
+    .ScrollBar(s => s.Visible(true))
+    .ScrollingMode(ChartPointerType.All)
+    .ZoomingMode(ChartPointerType.All)
+    .Legend(l => l.Visible(false))
+    .OnDone(@<text>
+        function(e) {
+            e.component.zoomArgument(300, 500);
+        }
+    </text>)
+    .DataSource(Model)
+)

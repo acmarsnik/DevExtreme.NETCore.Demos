@@ -1,0 +1,22 @@
+﻿<%
+var color = getAppointmentColor(RoomId);
+var data = arguments[0]; 
+%>
+<div class='appointment-content'>
+    <div class='appointment-badge' style="background-color: <%= color %>;"><%= Text[0] %></div>
+    <div class='appointment-text'><%= Text %></div>
+    <div class='appointment-dates'>
+        <%= Globalize.formatDate(StartDate, { skeleton: "MMMd" }) %> ,
+        <%= Globalize.formatDate(StartDate, { time: "short" }) %> -
+        <%= Globalize.formatDate(EndDate, { time: "short" }) %>
+    </div>
+        @(Html.DevExtreme().Button()
+        .ID("delete-appointment")
+        .Icon("trash")
+        .OnClick(@<text>
+            function() {
+                getSchedulerInstance().deleteAppointment(data);
+            }
+        </text>)
+        )
+</div>

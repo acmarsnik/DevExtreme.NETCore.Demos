@@ -1,0 +1,36 @@
+﻿.dx-dropdownlist-popup-wrapper .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item-content {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.custom-item {
+    position: relative;
+    min-height: 30px;
+}
+
+.custom-item .product-name  {
+    display: inline-block;
+    padding-left: 45px;
+    text-indent: 0;
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.custom-item > img {
+    left: 1px;
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+}
+
+.custom-item .dx-texteditor-buttons-container {
+    display: none;
+}
+
+.current-value {
+    padding: 10px 0;
+}
+
+.current-value > span {
+    font-weight: bold;
+}

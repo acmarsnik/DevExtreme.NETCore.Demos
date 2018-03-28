@@ -1,0 +1,1 @@
+This demo shows how to&nbsp;filter data in&nbsp;the **DataGrid** using the **FilterBuilder**&nbsp;&mdash; a&nbsp;widget that allows you to&nbsp;build complex filter expressions in&nbsp;the UI. Click the **Filter Builder** button to&nbsp;open the **FilterBuilder**. Use the check box under the **DataGrid** to&nbsp;show hierarchical columns in&nbsp;the **FilterBuilder**.

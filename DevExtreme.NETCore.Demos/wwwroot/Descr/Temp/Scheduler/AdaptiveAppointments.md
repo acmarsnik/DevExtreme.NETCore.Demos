@@ -1,0 +1,1 @@
+This example demonstrates how to&nbsp;limit the number of&nbsp;full-sized appointments per cell. On&nbsp;exceeding the limit, appointments are sent to&nbsp;the appointment collector where they are customized using the **dropDownAppointment** template.

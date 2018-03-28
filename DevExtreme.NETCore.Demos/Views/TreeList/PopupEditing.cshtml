@@ -1,0 +1,59 @@
+<div id="tree-list-demo">
+    @(Html.DevExtreme().TreeList<DevExtreme.NETCore.Demos.Models.TreeList.Employee>()
+        .ID("employees")
+        .DataSource(ds => ds.Mvc()
+            .Controller("TreeListEmployees")
+            .LoadAction("Get")
+            .UpdateAction("Put")
+            .InsertAction("Post")
+            .DeleteAction("Delete")
+            .Key("ID")
+        )
+        .KeyExpr("ID")
+        .ParentIdExpr("HeadID")
+        .ShowRowLines(true)
+        .Editing(e => e
+            .Mode(GridEditMode.Popup)
+            .AllowUpdating(true)
+            .AllowDeleting(true)
+            .AllowAdding(true)
+            .Popup(p => p
+                .Title("Employee Info")
+                .ShowTitle(true)
+                .Width(700)
+                .Height(295)
+                .Position(pos => pos
+                    .My(HorizontalAlignment.Center, VerticalAlignment.Top)
+                    .At(HorizontalAlignment.Center, VerticalAlignment.Top)
+                    .Of(new JS("window"))
+                )
+            )
+        )
+        .Columns(columns => {
+            columns.AddFor(m => m.FullName);
+
+            columns.AddFor(m => m.Prefix);
+
+            columns.AddFor(m => m.Title);
+
+            columns.AddFor(m => m.City)
+                .Width(150);
+
+            columns.AddFor(m => m.State);
+
+            columns.AddFor(m => m.HireDate)
+                .Width(120);
+        })
+        .ColumnAutoWidth(true)
+        .OnCellPrepared("treeList_onCellPrepared")
+        .ExpandedRowKeys(new[] { 1 })
+    )
+</div>
+
+<script>
+        function treeList_onCellPrepared(e) {
+            if (e.column.command === "edit") {
+                e.cellElement.children(".dx-link-add").remove();
+            }
+        }
+</script>

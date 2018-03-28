@@ -1,0 +1,1 @@
+This demo illustrates how the **Scheduler** groups its appointments by&nbsp;resources.

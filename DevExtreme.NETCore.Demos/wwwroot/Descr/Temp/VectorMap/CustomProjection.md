@@ -1,0 +1,1 @@
+This demo illustrates the use of&nbsp;custom projections in&nbsp;the **VectorMap** widget. Wagner-VI projection is&nbsp;used in&nbsp;this example.

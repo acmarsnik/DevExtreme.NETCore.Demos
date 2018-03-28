@@ -1,0 +1,31 @@
+﻿@model IEnumerable<DevExtreme.NETCore.Demos.Models.EmployeeTask>
+
+@(Html.DevExtreme().Scheduler()
+    .DataSource(Model)
+    .TextExpr("Subject")
+    .StartDateExpr("StartDate")
+    .EndDateExpr("DueDate")
+    .Views(new SchedulerViewType[] {
+        SchedulerViewType.Day,
+        SchedulerViewType.Week,
+        SchedulerViewType.WorkWeek,
+        SchedulerViewType.Month
+    })
+    .CurrentView(SchedulerViewType.WorkWeek)
+    .CurrentDate(new DateTime(2015, 5, 25))
+    .FirstDayOfWeek(FirstDayOfWeek.Monday)
+    .StartDayHour(8)
+    .EndDayHour(19)
+    .Groups(new string[] { "Priority" })
+    .Resources(res => {
+        res.Add()
+            .FieldExpr("Priority")
+            .AllowMultiple(false)
+            .Label("Priority")
+            .DataSource(new object[] {
+                new { id = "Low", text = "Low Priority", color = "#1e90ff" },
+                new { id = "High", text = "High Priority", color = "#ff9747" }
+            });
+    })
+    .Height(600)
+)

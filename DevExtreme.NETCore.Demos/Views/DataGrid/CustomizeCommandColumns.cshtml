@@ -1,0 +1,62 @@
+﻿@using DevExtreme.NETCore.Demos.Models.DataGrid
+
+@model IEnumerable<Employee>
+
+@(Html.DevExtreme().DataGrid<Employee>()
+    .DataSource(Model, new string[] { "ID" })
+    .Paging(p => p.Enabled(false))
+    .Editing(e => e.Mode(GridEditMode.Row).AllowUpdating(true).AllowDeleting(true))
+    .Columns(columns => {
+        columns.AddFor(m => m.Prefix);
+
+        columns.AddFor(m => m.FirstName);
+
+        columns.AddFor(m => m.LastName);
+
+        columns.AddFor(m => m.Position)
+            .Width(130);
+
+        columns.AddFor(m => m.StateID)
+            .Width(125)
+            .Lookup(lookup => lookup
+                .DataSource(d => d.Mvc().Controller("DataGridStatesLookup").LoadAction("Get").Key("ID"))
+                .DisplayExpr("Name")
+                .ValueExpr("ID")
+            );
+
+        columns.AddFor(m => m.BirthDate)
+            .Width(125);
+    })
+    .OnContentReady(@<text>
+        function(e) {
+            moveEditColumnToLeft(e.component);
+        }
+    </text>)
+    .OnCellPrepared("cell_prepared")
+)
+
+<script>
+    function moveEditColumnToLeft(dataGrid) {
+        dataGrid.columnOption("command:edit", {
+            visibleIndex: -1,
+            width: 80
+        });
+    }
+
+    function cell_prepared(e) {
+        if(e.rowType === "data" && e.column.command === "edit") {
+            var isEditing = e.row.isEditing,
+                $links = e.cellElement.find(".dx-link");
+
+            $links.text("");
+
+            if(isEditing) {
+                $links.filter(".dx-link-save").addClass("dx-icon-save");
+                $links.filter(".dx-link-cancel").addClass("dx-icon-revert");
+            } else {
+                $links.filter(".dx-link-edit").addClass("dx-icon-edit");
+                $links.filter(".dx-link-delete").addClass("dx-icon-trash");
+            }
+        }
+    }
+</script>

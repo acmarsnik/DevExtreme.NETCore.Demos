@@ -1,0 +1,37 @@
+﻿#popup {
+    padding: 10px;
+}
+
+#popup ul {
+    list-style-type: none;
+    text-align: center;
+    font-size: 0;
+}
+
+#popup ul li {
+    display: inline-block;
+    width: 160px;
+    margin: 10px;
+    font-size: 14px;
+}
+
+#popup ul li img{
+    width: 100px;
+}
+
+.button-info {
+    margin: 10px;
+}
+
+.popup p {
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.dx-theme-ios7 #popup ul li {
+    font-size: 16px;
+}
+
+.dx-theme-win10 #popup ul li {
+    font-size: 15px;
+}

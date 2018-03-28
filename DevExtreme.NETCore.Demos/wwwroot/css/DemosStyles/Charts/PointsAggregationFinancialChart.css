@@ -1,0 +1,13 @@
+﻿#chart-demo {
+    height: 450px;
+    width: 100%;
+}
+
+#zoomedChart {
+    height: 315px;
+    margin: 0 0 15px;
+}
+
+#chart-demo > div:not(#zoomedChart) {
+    height: 120px;
+}

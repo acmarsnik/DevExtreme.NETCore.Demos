@@ -1,0 +1,44 @@
+﻿@(Html.DevExtreme().PieChart()
+    .ID("pie-chart")
+    .Palette(VizPalette.Bright)
+    .Title("Top 10 Most Populated States in US")
+    .Series(s => s
+        .Add()
+        .ArgumentField("Name")
+        .ValueField("Population")
+        .TagField("Data")
+    )
+    .Export(e => e.Enabled(true))
+    .Tooltip(t => t
+        .Enabled(true)
+        .CustomizeTooltip(@<text>
+            function (args) {
+                return {
+                    html: "<div class='state-tooltip'><img src='@Url.Content("~/images/flags/")" +
+                    args.point.tag.Flag + ".gif' /><h4>" +
+                    args.argument + "</h4><div><b>Capital</b>: " +
+                    args.point.tag.Capital + 
+                    "</div><div><b>Population</b>: " +
+                    Globalize.formatNumber(args.value, { maximumFractionDigits: 0 }) +
+                    " people</div>" + "<div><b>Area</b>: " +
+                    Globalize.formatNumber(args.point.tag.Area, { maximumFractionDigits: 0 }) +
+                    " km<sup>2</sup> (" +
+                                  Globalize.formatNumber(0.3861 * args.point.tag.Area, { maximumFractionDigits: 0 }) +
+                    " mi<sup>2</sup>)" + "</div>" + "</div>"
+                };
+            }
+        </text>)
+    )
+    .DataSource(new List<object> {
+        new { Name = "California", Population = 38802500, Data = new { Capital = "Sacramento", Area = 423967, Flag = "california" }  },
+        new { Name = "Texas", Population = 26956958, Data = new { Capital = "Austin", Area = 695662, Flag = "texas" } },
+        new { Name = "Florida", Population = 19893297, Data = new { Capital = "Tallahassee", Area = 170312, Flag = "florida" } },
+        new { Name = "New York", Population = 19746227, Data = new { Capital = "Albany", Area = 141297, Flag = "newyork" } },
+        new { Name = "Illinois", Population = 12880580, Data = new { Capital = "Springfield", Area = 149995, Flag = "illinois" } },
+        new { Name = "Pennsylvania", Population = 12787209, Data = new { Capital = "Harrisburg", Area = 119280, Flag = "pennsylvania" } },
+        new { Name = "Ohio", Population = 11594163, Data = new { Capital = "Columbus", Area = 116098, Flag = "ohio" } },
+        new { Name = "Georgia", Population = 10097343, Data = new { Capital = "Atlanta", Area = 153910, Flag = "georgia" } },
+        new { Name = "North Carolina", Population = 9943964, Data = new { Capital = "Raleigh", Area = 139391, Flag = "northcarolina" } },
+        new { Name = "Michigan", Population = 9909877, Data = new { Capital = "Lansing", Area = 250487, Flag = "michigan" } }
+    })
+)

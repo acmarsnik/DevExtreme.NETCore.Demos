@@ -1,0 +1,135 @@
+﻿@using DevExtreme.NETCore.Demos.Models
+@model List<OrderWithCustomerInfo>
+
+@{ 
+    var filterValue = new object[] {
+        new object[] { "Employee", FilterBuilderFieldFilterOperations.Equal, "Harv Mudd" },
+        "or",
+        new object[] { "Employee", FilterBuilderFieldFilterOperations.Equal, "Todd Hoffman" },
+        "or",
+        new object[] {
+            new object[] { "Employee", FilterBuilderFieldFilterOperations.Equal, "Clark Morgan" },
+            "and",
+            new object[] { "CustomerInfo.StoreCity", FilterBuilderFieldFilterOperations.Equal, "Salt Lake City" }
+        }
+    };
+}
+
+
+@(Html.DevExtreme().Popup()
+    .ID("popup")
+    .Title("Filter Builder")
+    .DeferRendering(false)
+    .ContentTemplate(@<div id="scrollview">
+        @(Html.DevExtreme().FilterBuilder<OrderWithCustomerInfo>()
+                .ID("filterBuilder")
+                .Fields(fields => {
+                    fields.AddFor(m => m.OrderNumber);
+                    fields.AddFor(m => m.OrderDate);
+                    fields.AddFor(m => m.SaleAmount).Format(Format.Currency);
+                    fields.AddFor(m => m.Employee);
+                    fields.AddFor(m => m.CustomerInfo.StoreCity);
+                    fields.AddFor(m => m.CustomerInfo.StoreState);
+                })
+                .OnInitialized("function() { $('#scrollview').dxScrollView({ direction: 'both' }); }")
+        )
+    </div>)
+    .OnShowing("onPopupShowing")
+    .ToolbarItems(items => {
+        items.Add()
+            .Location(ToolbarItemLocation.After)
+            .Toolbar(Toolbar.Bottom)
+            .Widget(w => w.Button()
+                .Text("OK")
+                .OnClick("applyFilterClick")
+            );
+
+        items.Add()
+            .Location(ToolbarItemLocation.After)
+            .Toolbar(Toolbar.Bottom)
+            .Widget(w => w.Button()
+                .Text("Cancel")
+                .OnClick("hidePopupClick")
+            );
+    })
+)
+
+@(Html.DevExtreme().DataGrid<OrderWithCustomerInfo>()
+    .ID("gridContainer")
+    .DataSource(Model)
+    .DataSourceOptions(d => d.Filter(filterValue))
+    .Columns(columns => {
+        columns.AddFor(m => m.OrderNumber);
+        columns.AddFor(m => m.OrderDate);
+        columns.AddFor(m => m.SaleAmount).Format(Format.Currency);
+        columns.AddFor(m => m.Employee);
+        columns.AddFor(m => m.CustomerInfo.StoreCity);
+        columns.AddFor(m => m.CustomerInfo.StoreState);
+    })
+    .OnToolbarPreparing("onDataGridToolbarPreparing")
+)
+
+<div class="options">
+    <div class="caption">Options</div>
+    <div class="option">
+        @(Html.DevExtreme().CheckBox()
+            .Text("Allow hierarchical fields")
+            .Value(false)
+            .OnValueChanged("changeAllowHierarchicalFieldsOption")
+        )
+    </div>
+</div>
+
+<script>
+    function applyFilterClick() {
+        var filter = $("#filterBuilder").dxFilterBuilder("instance").option("value");
+        $("#gridContainer").dxDataGrid("instance").filter(filter);
+        $("#filterButton").dxButton("instance")
+            .option("type", filter ? "success" : "default");
+        $("#clearFilterButton").dxButton("instance")
+            .option("disabled", !filter);
+        $("#popup").dxPopup("instance").hide();
+    }
+
+    function hidePopupClick() {
+        $("#popup").dxPopup("instance").hide();
+    }
+
+    function onPopupShowing() {
+        var gridFilter = $("#gridContainer").dxDataGrid("instance").filter();
+        $("#filterBuilder").dxFilterBuilder("instance").option("value", gridFilter);
+    }
+
+    function changeAllowHierarchicalFieldsOption(e) {
+        $("#filterBuilder").dxFilterBuilder("instance").option("allowHierarchicalFields", e.value);
+    }
+
+    function onDataGridToolbarPreparing(e) {
+        e.toolbarOptions.items.push({
+            location: "before",
+            widget: "dxButton",
+            options: {
+                elementAttr: { id: "filterButton" },
+                text: "Filter Builder",
+                type: "success",
+                icon: "filter",
+                onClick: function(e) {
+                    $("#popup").dxPopup("instance").show();
+                }
+            }
+        }, {
+            location: "before",
+            widget: "dxButton",
+            options: {
+                elementAttr: { id: "clearFilterButton" },
+                text: "Clear Filter",
+                onClick: function(e) {
+                    $("#gridContainer").dxDataGrid("instance").clearFilter();
+                    $("#filterBuilder").dxFilterBuilder("instance").option("value", null);
+                    e.component.option("disabled", true);
+                    $("#filterButton").dxButton("instance").option("type", "default");
+                }
+            }
+        });
+    }
+</script>

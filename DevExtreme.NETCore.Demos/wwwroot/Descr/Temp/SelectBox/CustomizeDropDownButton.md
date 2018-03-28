@@ -1,0 +1,1 @@
+The **SelectBox** widget allows an&nbsp;end user to&nbsp;specify a&nbsp;custom template for the drop-down button. This demo illustrates how to&nbsp;use an&nbsp;image and the **LoadIndicator** widget in&nbsp;custom templates.

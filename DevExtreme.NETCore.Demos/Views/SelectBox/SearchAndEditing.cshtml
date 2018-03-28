@@ -1,0 +1,55 @@
+﻿@model DevExtreme.NETCore.Demos.ViewModels.SelectBoxViewModel
+
+<div class="dx-fieldset">
+    <div class="dx-fieldset-header">SearchBox mode</div>
+    <div class="dx-field">
+        <div class="dx-field-label">Product</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().SelectBox()
+                .DataSource(d => d.Mvc().LoadAction("GetItems").Key("ID"))
+                .DisplayExpr("Name")
+                .ValueExpr("ID")
+                .SearchEnabled(true)
+            )
+        </div>
+    </div>
+</div>
+<div class="dx-fieldset">
+    <div class="dx-fieldset-header">EditBox mode</div>
+    <div class="dx-field">
+        <div class="dx-field-label">Product</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().SelectBox()
+                .ID("editable-products")
+                .DataSource(Model.Items)
+                .AcceptCustomValue(true)
+                .OnValueChanged("selectBox_valueChanged")
+                .OnCustomItemCreating("selectBox_customItemCreating")
+                .Value("HD Video Player")
+            )
+        </div>
+    </div>
+    <div class="dx-field current-product">
+        Current product is <span class="current-value">HD Video Player</span>
+    </div>
+</div>
+
+<script>
+    function selectBox_valueChanged(data) {
+        $(".current-value").text(data.value);
+    }
+
+    function getEditableSelectBoxInstance() {
+        return $("#editable-products").dxSelectBox("instance");
+    }
+
+    function selectBox_customItemCreating(data) {
+        var newItem = data.text,
+            editableProduct = getEditableSelectBoxInstance(),
+            simpleProducts = editableProduct.option("items");
+
+        simpleProducts.push(newItem)
+        editableProduct.option("items", simpleProducts);
+        return newItem;
+    }
+</script>

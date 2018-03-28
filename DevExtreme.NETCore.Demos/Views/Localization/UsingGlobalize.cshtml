@@ -1,0 +1,77 @@
+﻿@section Localization {
+    <script src="@Url.Action( "CldrData", "Localization", new { t = CldrDataScriptBuilder.GetCacheParam() })"></script>
+    <script src="~/lib/devextreme/js/localization/dx.messages.de.js"></script>
+    <script src="~/lib/devextreme/js/localization/dx.messages.ru.js"></script>
+}
+
+@model IEnumerable<DevExtreme.NETCore.Demos.Models.Payment>
+
+<div id="data-grid-demo">
+    @(Html.DevExtreme().DataGrid()
+        .DataSource(Model)
+        .Columns(columns => {
+            columns.Add().DataField("PaymentId")
+                .Width(100)
+                .AllowEditing(false);
+            columns.Add().DataField("ContactName");
+            columns.Add().DataField("CompanyName");
+            columns.Add().DataField("Amount")
+                .DataType(GridColumnDataType.Number)
+                .Format(Format.Currency);
+            columns.Add().DataField("PaymentDate")
+                .DataType(GridColumnDataType.Date);
+        })
+        .FilterRow(filterRow => filterRow
+            .Visible(true)
+            .ApplyFilter(GridApplyFilterMode.Auto)
+        )
+        .Editing(c => c
+            .Mode(GridEditMode.Popup)
+            .AllowUpdating(true)
+            .Popup(e => e
+                .Width(700)
+                .Height(345)
+            )
+        )
+    )
+
+    <div class="options">
+        <div class="caption">Options</div>
+        <div class="option">
+            <label for="selectInput">Language</label>
+            @(Html.DevExtreme().SelectBox()
+                .ID("selectBox")
+                .InputAttr("id", "selectInput")
+                .DataSource(new JS("locales"))
+                .DisplayExpr("name")
+                .ValueExpr("value")
+                .Value(new JS("locale"))
+                .OnValueChanged("changeLocale")
+            )
+        </div>
+    </div>
+</div>
+
+<script>
+    var locale = getLocale();
+    var locales = [
+        { name: "English", value: "en" },
+        { name: "Deutsch", value: "de" },
+        { name: "Русский", value: "ru" }
+    ];
+    Globalize.locale(locale);
+
+    function changeLocale(data) {
+        setLocale(data.value);
+        document.location.reload();
+    }
+
+    function getLocale() {
+        var locale = sessionStorage.getItem("locale");
+        return locale != null ? locale : "en";
+    }
+
+    function setLocale(locale) {
+        sessionStorage.setItem("locale", locale);
+    }
+</script>

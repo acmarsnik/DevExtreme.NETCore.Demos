@@ -1,0 +1,1 @@
+The **SelectBox** widget allows an&nbsp;end user to&nbsp;search through its items or&nbsp;even add custom ones.

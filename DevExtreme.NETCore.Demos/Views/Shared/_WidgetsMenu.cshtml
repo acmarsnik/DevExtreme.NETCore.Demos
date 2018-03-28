@@ -1,0 +1,25 @@
+﻿
+<div class="widgets-menu">
+    @(Html.DevExtreme().TreeView()
+        .DataSource(d => d.Mvc()
+            .Controller("SiteNavigationData")
+            .LoadAction("Get")
+            .LoadParams(new {
+                demoAction = ViewContext.RouteData.Values["action"],
+                demoController = ViewContext.RouteData.Values["controller"]
+            })
+        )
+        .ItemTemplate(@<text>
+            <a href="<%= Url %>"><%= Name %></a>
+        </text>)
+        .ExpandedExpr("Active")
+        .DataStructure(TreeViewDataStructure.Plain)
+        .SelectedExpr("Active")
+        .SelectNodesRecursive(false)
+        .AnimationEnabled(false)
+        .ParentIdExpr("ParrentId")
+        .KeyExpr("Id")
+        .ItemsExpr("Groups")
+        .FocusStateEnabled(false)
+    )
+</div>

@@ -1,0 +1,1 @@
+This demo shows how to&nbsp;export several charts into a&nbsp;single image using the **DevExpress.viz.exportFromMarkup** method. Before calling this method, you need to&nbsp;collect the SVG markup of&nbsp;all charts using the **DevExpress.viz.getMarkup** method and calculate the size of&nbsp;the resulting image.

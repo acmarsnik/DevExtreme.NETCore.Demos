@@ -1,0 +1,1 @@
+This demo illustrates how the **Chart** widget aggregates series points to&nbsp;improve readability whenever a&nbsp;large data source is&nbsp;visualized. The **useAggregation** option activates this feature. The **RangeSelector** widget zooms the contents of&nbsp;the **Chart**. Note that whenever the selected range is&nbsp;reduced, the series becomes less aggregated.

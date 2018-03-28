@@ -1,0 +1,65 @@
+﻿@model DevExtreme.NETCore.Demos.ViewModels.AdaptiveAppointmentsViewModel
+
+@(Html.DevExtreme().Scheduler()
+    .ID("scheduler")
+    .DataSource(Model.Appointments)
+    .Views(views => {
+        views.Add()
+            .Name("Auto Mode")
+            .Type(SchedulerViewType.Month)
+            .MaxAppointmentsPerCell(MaxAppointmentsPerCell.Auto);
+
+        views.Add()
+            .Name("Unlimited Mode")
+            .Type(SchedulerViewType.Month)
+            .MaxAppointmentsPerCell(MaxAppointmentsPerCell.Unlimited);
+
+        views.Add()
+            .Name("Numeric Mode")
+            .Type(SchedulerViewType.Month)
+            .MaxAppointmentsPerCell(2);
+    })
+    .CurrentView("Auto Mode")
+    .DropDownAppointmentTemplate(@<text>
+        @(Html.Partial("_AppointmentTemplate"))
+    </text>)
+    .AppointmentTooltipTemplate(@<text>
+        @(Html.Partial("_AppointmentTemplate"))
+    </text>)
+    .OnAppointmentDeleted(@<text>
+        function() {
+            var scheduler = e.component.dxScheduler("instance");
+
+            scheduler.hideAppointmentTooltip();
+        }
+    </text>)
+    .CurrentDate(new DateTime(2017, 5, 25))
+    .Resources(res =>
+    {
+        res.Add()
+            .FieldExpr("RoomId")
+            .ValueExpr("Id")
+            .ColorExpr("Color")
+            .Label("Room")
+            .DataSource(Model.Resources);
+    })
+    .Height(650)
+    .TextExpr("Text")
+    .StartDateExpr("StartDate")
+    .EndDateExpr("EndDate")
+)
+
+<script>
+    var resourcesData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Resources));
+
+    function getSchedulerInstance() {
+        return $("#scheduler").dxScheduler("instance");
+    }
+
+    function getAppointmentColor(resourceId) {
+        return DevExpress.data.query(resourcesData)
+                .filter("Id", resourceId)
+                .toArray()[0].Color;
+    }
+
+</script>

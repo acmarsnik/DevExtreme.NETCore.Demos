@@ -1,0 +1,30 @@
+@(Html.DevExtreme().Chart()
+    .ID("chart")
+    .Rotated(true)
+    .DataSource("https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/data/simpleJSON.json")
+    .Series(s => s.Add()
+        .Label(l => l
+            .Visible(true)
+            .BackgroundColor("#c18e92")
+        )
+        .Color("#79cac4")
+        .Type(SeriesType.Bar)
+        .ArgumentField("day")
+        .ValueField("sales")
+    )
+    .Title("Daily Sales")
+    .ArgumentAxis(a => a
+        .Label(l => l
+            .CustomizeText(@<text>
+                function() {
+                    return "Day " + this.valueText;
+                }
+            </text>)
+        )
+    )
+    .ValueAxis(a => a.Add()
+        .Label(l => l.Visible(false))
+    )
+    .Export(e => e.Enabled(true))
+    .Legend(l => l.Visible(false))
+)

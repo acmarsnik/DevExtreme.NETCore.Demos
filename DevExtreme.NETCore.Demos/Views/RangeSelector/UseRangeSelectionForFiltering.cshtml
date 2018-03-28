@@ -1,0 +1,51 @@
+﻿@model List<DevExtreme.NETCore.Demos.Models.SelectedEmployee>
+
+@(Html.DevExtreme().RangeSelector()
+    .ID("range-selector-demo")
+    .Margin(m => m.Top(20))
+    .Size(s => s.Height(140))
+    .DataSource(Model)
+    .DataSourceField("BirthYear")
+    .Scale(s => s
+        .TickInterval(1)
+        .MinorTickInterval(1)
+        .Label(f => f.Format(Format.Decimal)))
+    .Behavior(b => b.CallValueChanged(ValueChangedCallMode.OnMoving))
+    .Title("Filter Employee List by Birth Year")
+    .OnValueChanged("rangeSelector_valueChanged")
+)
+
+<script>
+    var _employees = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+
+    function showEmployees(employees) {
+        var employee,
+            tableHtml;
+
+        if($('#selectedEmployees').length === 0) {
+            $('#range-selector-demo').append("<center><h2>Selected Employees</h2> <div id='selectedEmployees' /></center>");
+        }
+        $('#selectedEmployees').empty();
+        tableHtml = '<table><tr>';
+        $.each(['First Name', 'Last Name', 'Birth Year', 'City', 'Title'], function() {
+            tableHtml += '<td><b>' + this + '</b></td>';
+        });
+        tableHtml += '</tr>';
+        $.each(employees, function() {
+            tableHtml += '<tr><td>' + this.FirstName + '</td><td>' + this.LastName + '</td><td>' + this.BirthYear + '</td><td>' + this.City + '</td><td>' + this.Title + '</td></tr>';
+        });
+        tableHtml += '</table>';
+        $('#selectedEmployees').html(tableHtml);
+    };
+
+    function rangeSelector_valueChanged(e) {
+        var selectedEmployees = $.grep(_employees, function(employee) {
+            return employee.BirthYear >= e.value[0] && employee.BirthYear <= e.value[1];
+        });
+        showEmployees(selectedEmployees);
+    }
+
+    $(function() {
+        showEmployees(_employees);
+    });
+</script>

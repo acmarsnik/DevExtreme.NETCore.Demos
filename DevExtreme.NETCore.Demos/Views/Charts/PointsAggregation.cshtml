@@ -1,0 +1,47 @@
+﻿@(Html.DevExtreme().Chart()
+    .ID("zoomedChart")
+    .ArgumentAxis(a => a.ValueMarginsEnabled(false))
+    .ValueAxis(a => a
+        .Add()
+        .Label(l => l
+            .Format(f => f
+                .Type(Format.FixedPoint)
+            )
+        )
+    )
+    .UseAggregation(true)
+    .Legend(l => l.Visible(false))
+    .Series(s => s
+        .Add()
+        .ArgumentField("Arg")
+        .ValueField("Val")
+        .Point(p => p.Size(7))
+    )
+    .DataSource(d => d.Mvc().LoadAction("GetPoints"))
+)
+
+@(Html.DevExtreme().RangeSelector()
+    .ID("range-selector")
+    .Size(s => s.Height(120))
+    .Chart(c => c
+        .Series(s => s
+            .Add()
+            .ArgumentField("Arg")
+            .ValueField("Val")
+        )
+        .UseAggregation(true)
+    )
+    .Scale(s => s.MinRange(1))
+    .SliderMarker(m => m.Format(f => f.Type(Format.Decimal).Precision(0)))
+    .Behavior(b => b
+        .CallValueChanged(ValueChangedCallMode.OnMoving)
+        .SnapToTicks(false)
+    )
+    .OnValueChanged(@<text>
+        function (e) {
+            var chart = $("#zoomedChart").dxChart("instance");
+            chart.zoomArgument(e.value[0], e.value[1]);
+        }
+    </text>)
+    .DataSource(d => d.Mvc().LoadAction("GetPoints"))
+)

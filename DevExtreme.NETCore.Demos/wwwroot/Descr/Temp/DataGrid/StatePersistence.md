@@ -1,0 +1,1 @@
+Sort, filter, group and reorder columns, resize the grid and change page numbers and page size. Refresh the web page and note that the grid&rsquo;s state is&nbsp;automatically persisted.

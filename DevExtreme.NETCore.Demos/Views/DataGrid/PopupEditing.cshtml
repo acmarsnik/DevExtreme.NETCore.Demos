@@ -1,0 +1,53 @@
+﻿<div id="data-grid-demo">
+    @(Html.DevExtreme().DataGrid<DevExtreme.NETCore.Demos.Models.DataGrid.Employee>()
+        .ID("gridContainer")
+        .Paging(p => p.Enabled(false))
+        .Editing(e => e.Mode(GridEditMode.Popup)
+           .AllowUpdating(true)
+           .Popup(p => p
+                .Title("Employee Info")
+                .ShowTitle(true)
+                .Width(700)
+                .Height(345)
+                .Position(pos => pos
+                    .My(HorizontalAlignment.Center, VerticalAlignment.Top)
+                    .At(HorizontalAlignment.Center, VerticalAlignment.Top)
+                    .Of(new JS("window"))
+                )
+           )
+        )
+        .Columns(columns => {
+            columns.AddFor(m => m.Prefix)
+                .Width(70);
+
+            columns.AddFor(m => m.FirstName);
+
+            columns.AddFor(m => m.LastName);
+
+            columns.AddFor(m => m.BirthDate);
+
+            columns.AddFor(m => m.Position)
+                .Width(170);
+
+            columns.AddFor(m => m.HireDate);
+
+            columns.AddFor(m => m.StateID)
+                .Width(125)
+                .Lookup(lookup => lookup
+                    .DataSource(d => d.Mvc().Controller("DataGridStatesLookup").LoadAction("Get").Key("ID"))
+                    .DisplayExpr("Name")
+                    .ValueExpr("ID")
+                );
+
+            columns.AddFor(m => m.Address)
+                .Visible(false);
+        })
+        .DataSource(d => d.Mvc()
+            .Controller("DataGridEmployees")
+            .LoadAction("Get")
+            .UpdateAction("Put")
+            .Key("ID")
+        )
+        .DataSourceOptions(d => d.Filter("['ID', '<=' , 14]"))
+    )
+</div>

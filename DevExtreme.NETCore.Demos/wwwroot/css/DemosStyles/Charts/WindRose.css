@@ -1,0 +1,18 @@
+﻿#chart-demo {
+    height: 600px;
+    width: 100%;
+}
+
+#radarChart {
+    height: 500px;
+}
+
+#chart-demo > .center {
+	text-align: center;
+}
+
+#chart-demo > .center > div,
+#chart-demo > .center > .dx-widget {
+    display: inline-block;
+    vertical-align: middle;
+}

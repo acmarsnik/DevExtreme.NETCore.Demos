@@ -1,0 +1,9 @@
+﻿@{
+    var currentDemo = DevExtreme.NETCore.Demos.Models.Demos.MvcDemosStore.GetDemo(
+                            ViewContext.RouteData.Values["controller"].ToString()
+                            , ViewContext.RouteData.Values["action"].ToString());
+}
+
+@if(currentDemo.HasStyles) {
+    <link rel="stylesheet" href="@Url.Content(string.Format("~/css/DemosStyles/{0}/{1}.css", currentDemo.Widget, currentDemo.Name))" />
+}

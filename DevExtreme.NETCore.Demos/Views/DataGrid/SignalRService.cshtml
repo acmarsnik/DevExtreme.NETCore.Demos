@@ -1,0 +1,72 @@
+﻿@using DevExtreme.NETCore.Demos.Models.SignalR
+
+@(Html.DevExtreme().DataGrid<Stock>()
+    .ID("gridContainer")
+    .LoadPanel(loadPanel => loadPanel.Enabled(false))
+    .Columns(columns => {
+        columns.AddFor(m => m.LastUpdate).DataField("lastUpdate")
+            .Width(110)
+            .Format(Format.LongTime);
+
+        columns.AddFor(m => m.Symbol).DataField("symbol");
+
+        columns.AddFor(m => m.Price).DataField("price")
+            .Format("#0.####")
+            .CellTemplate(@<text>
+                <span class="<%= data.change > 0 ? 'inc' : 'dec' %>">
+                    <%= text %>
+                </span>
+            </text>);
+
+        columns.AddFor(m => m.Change).DataField("change")
+            .Width(140)
+            .Format("#0.####")
+            .CellTemplate(@<text>
+                <span class="<%= data.change > 0 ? 'inc' : 'dec' %>">
+                    <span class="current-value"><%= text %></span>
+                    <span class="arrow"></span>
+                    <span class="diff"><%= data.percentChange.toFixed(2) %>%</span>
+                </span>
+            </text>);
+
+        columns.AddFor(m => m.DayOpen).DataField("dayOpen")
+           .Format("#0.####");
+
+        columns.AddFor(m => m.DayMin).DataField("dayMin")
+           .Format("#0.####");
+
+        columns.AddFor(m => m.DayMax).DataField("dayMax")
+           .Format("#0.####");
+    })
+)
+
+<script src="~/signalr/signalr-client.js"></script>
+<script>
+    var connection = new signalR.HubConnection("@Url.Content("~/liveUpdateSignalRHub")");
+    $(function () {
+        var arrayStore, dataSource;
+        connection.on("updateStockPrice", function (data) {
+            if (arrayStore) {
+                arrayStore.update(data.symbol, data);
+                dataSource.reload();
+            }
+        });
+        connection.start()
+            .then(function () {
+                connection.invoke("getAllStocks").then(function (data) {
+                    arrayStore = new DevExpress.data.ArrayStore({
+                        key: "symbol",
+                        data: data
+                    });
+                    dataSource = new DevExpress.data.DataSource({
+                        store: arrayStore
+                    });
+
+                    $("#gridContainer").dxDataGrid({
+                        dataSource: dataSource
+                    });
+                }); 
+            });        
+    });  
+</script>
+

@@ -1,0 +1,66 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.demo-container {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+}
+
+.dx-theme-generic .demo-container {
+    min-height: 450px;
+}
+
+.dx-theme-generic.TabletPortrait .demo-container,
+.dx-theme-generic.TabletLandscape .demo-container {
+    min-height: 100%;
+}
+
+.dx-color-scheme-dark .options,
+.dx-color-scheme-contrast .options {
+     background-color: #363636;
+}
+
+.dx-color-scheme-dark .selected-data,
+.dx-color-scheme-contrast .selected-data {
+    background: #363636;
+}
+
+.dx-color-scheme-dark #events,
+.dx-color-scheme-contrast #events {
+    background: #363636;
+}
+
+.dx-color-scheme-dark #events ul li,
+.dx-color-scheme-contrast #events ul li {
+    border-bottom: 1px solid #4d4d4d;
+}
+
+body:not(.dx-theme-generic) .options {
+    left: 0;
+    top: auto;
+    width: auto;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+}
+
+body:not(.dx-theme-generic) .widget-container {
+    margin-right: 0;
+}
+
+body:not(.dx-theme-generic) #calendar-demo .options,
+body:not(.dx-theme-generic) #list-api-demo .options,
+body:not(.dx-theme-generic) #list-demo .options,
+body:not(.dx-theme-generic) #form-demo .options {
+    position: static;
+    margin-top: 20px;
+}

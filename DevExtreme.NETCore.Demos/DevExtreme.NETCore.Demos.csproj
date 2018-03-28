@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DefineConstants>$(DefineConstants);DB_SQLITE</DefineConstants>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>DevExtreme.NETCore.Demos</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>DevExtreme.NETCore.Demos</PackageId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="wwwroot\**\*" />
+    <Content Remove="project.json" />
+    <Content Remove="project.lock.json" />
+    <Content Update="wwwroot\**\*;Views\**\*;Areas\**\Views;appsettings.json;web.config">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommonMark.NET" Version="0.15.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="1.3.0" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="17.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-alpha2-final" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <_CustomFilesControllers Include="$(MSBuildProjectDirectory)/Controllers/**/*" />
+    <DotnetPublishFiles Include="@(_CustomFilesControllers)">
+      <DestinationRelativePath>Controllers/%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+    </DotnetPublishFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <_CustomFilesViews Include="$(MSBuildProjectDirectory)/Views/**/*" />
+    <DotnetPublishFiles Include="@(_CustomFilesViews)">
+      <DestinationRelativePath>Views/%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+    </DotnetPublishFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <_CustomFilesModels Include="$(MSBuildProjectDirectory)/Models/**/*" />
+    <DotnetPublishFiles Include="@(_CustomFilesModels)">
+      <DestinationRelativePath>Models/%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+    </DotnetPublishFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <_CustomFilesViewModels Include="$(MSBuildProjectDirectory)/ViewModels/**/*" />
+    <DotnetPublishFiles Include="@(_CustomFilesViewModels)">
+      <DestinationRelativePath>ViewModels/%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+    </DotnetPublishFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <_CustomFiles Include="$(MSBuildProjectDirectory)/wwwroot/lib/**/*" />
+    <DotnetPublishFiles Include="@(_CustomFiles)">
+      <DestinationRelativePath>wwwroot/lib/%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+    </DotnetPublishFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <DotnetPublishFiles Include="$(MSBuildProjectDirectory)\Northwind.sqlite">
+      <DestinationRelativePath>Northwind.sqlite</DestinationRelativePath>
+    </DotnetPublishFiles>
+  </ItemGroup>
+</Project>

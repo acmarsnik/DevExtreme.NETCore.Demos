@@ -1,0 +1,21 @@
+﻿@(Html.DevExtreme().PolarChart()
+    .ID("chart")
+    .DataSource(new List<object> {
+       new { arg = 0, val = 0 },
+       new { arg = 720, val = 2 }
+    })
+    .Series(s => s
+        .Add()
+        .Type(PolarChartSeriesType.Line)
+        .ValueField("val")
+        .Name("Function"))
+    .Legend(l => l.Visible(false))
+    .CommonSeriesSettings(s => s.Closed(false))
+    .ArgumentAxis(a => a
+        .Inverted(true)
+        .StartAngle(90)
+        .TickInterval(45)
+        .Period(360))
+    .Export(e => e.Enabled(true))
+    .Title("Archimedean Spiral")
+)

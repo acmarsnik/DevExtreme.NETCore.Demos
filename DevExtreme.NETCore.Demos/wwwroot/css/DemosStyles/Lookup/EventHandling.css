@@ -1,0 +1,8 @@
+﻿.dx-theme-generic img {
+    max-width: 200px;
+    float: left;
+}
+
+img {
+    max-width: 100%;
+}

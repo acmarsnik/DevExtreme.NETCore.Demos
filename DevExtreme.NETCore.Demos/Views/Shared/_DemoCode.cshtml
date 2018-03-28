@@ -1,0 +1,48 @@
+﻿@{
+    var currentDemo = DevExtreme.NETCore.Demos.Models.Demos.MvcDemosStore.GetDemo(
+                            ViewContext.RouteData.Values["controller"].ToString()
+                            , ViewContext.RouteData.Values["action"].ToString());
+}
+
+<div class="code">
+    @(Html.DevExtreme().Tabs()
+        .DataSource(
+            currentDemo.Files.Select(item => item.Name)
+        )
+        .OnItemClick(@"setCurrentSourceBlock")
+        .SelectedIndex(0)
+    )
+    @{
+        bool first = true;
+        var prettifiedRowsCount = 400;
+    }
+    @foreach(var file in currentDemo.Files) {
+        var prettifiedContent = file.Content;
+        var notPretifiedContent = string.Empty;
+        var rows = file.Content.Split('\n');
+        var rowsCount = rows.Length;
+        if(rowsCount > prettifiedRowsCount) {
+            prettifiedContent = string.Join("\n", rows.Take(prettifiedRowsCount));
+            notPretifiedContent = string.Join("\n", rows.Skip(prettifiedRowsCount));
+        }
+        <pre class="@(first ? "prettyprint" : "") source-block" id="@file.Name.Replace(".", "-")"><code class="@(file.Name.Contains("css") ? "lang-css" : string.Empty)">@prettifiedContent<span class="nocode">@notPretifiedContent</span></code></pre>
+        first = false;
+    }
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/lang-css.js"></script>
+
+    <script>
+        $(function () {
+            $(".source-block").first().addClass("active");
+        })
+
+        var setCurrentSourceBlock = function (e) {
+            $('.source-block').removeClass('active prettyprint');
+            var currentSourceBlock = $('#' + e.itemData.replace('.', '-'));
+            currentSourceBlock.addClass('active prettyprint');
+            if (!currentSourceBlock.hasClass("prettyprinted")) {
+                PR.prettyPrint();
+            }
+        }
+    </script>
+</div>

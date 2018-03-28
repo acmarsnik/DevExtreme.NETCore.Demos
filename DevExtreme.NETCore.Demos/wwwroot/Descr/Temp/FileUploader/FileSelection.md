@@ -1,0 +1,4 @@
+The **FileUploader** widget allows an&nbsp;end user to&nbsp;upload files to&nbsp;the server. This demo illustrates the use of&nbsp;the **FileUploader** within a&nbsp;web page. To&nbsp;select a&nbsp;file using the **Open file** dialog, click the _Select photo_ button. Note that the **Open file** dialog only accepts image file types as&nbsp;the **accept** configuration option of&nbsp;the **FileUploader** is&nbsp;set to&nbsp;_&laquo;image/\*&raquo;_. 
+
+
+**IMPORTANT:** This demo does not actually upload the selected file. To&nbsp;upload a&nbsp;file, submit the form. The form element should contain the **action** attribute, which holds the URL of&nbsp;the page providing server scenarios for saving uploaded files.

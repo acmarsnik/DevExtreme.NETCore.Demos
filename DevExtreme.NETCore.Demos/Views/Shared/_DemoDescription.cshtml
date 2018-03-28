@@ -1,0 +1,11 @@
+﻿@{
+    var currentDemo = DevExtreme.NETCore.Demos.Models.Demos.MvcDemosStore.GetDemo(
+                            ViewContext.RouteData.Values["controller"].ToString()
+                            , ViewContext.RouteData.Values["action"].ToString());
+}
+
+<div class="description">
+    @if(!String.IsNullOrEmpty(currentDemo.Description)) {
+        <div>@Html.Raw(currentDemo.Description)</div>
+    }
+</div>

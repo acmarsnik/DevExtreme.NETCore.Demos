@@ -1,0 +1,1 @@
+The **DropDownBox** widget is&nbsp;an&nbsp;editor that consists of&nbsp;a&nbsp;text field and drop-down content. The content can be&nbsp;anything. In&nbsp;this demo, it&nbsp;is&nbsp;the **TreeView** widget and the **DataGrid** widget. This demo also illustrates how to&nbsp;implement multiple selection and how to&nbsp;synchronize the **DropDownBox** with the nested widgets.
